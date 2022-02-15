@@ -68,7 +68,7 @@ class Pager
         // active || disabled
         echo '<li class="' . $class['li']['main'];
         echo ' ';
-        echo $this->page_num === 1 ? $class['li']['disabled'] : $class['li']['active'];
+        echo $this->page_num === 1 ? $class['li']['disabled'] : '';
         echo '">';
         // prev link
         $prev = $this->page_num - 1;
@@ -82,7 +82,7 @@ class Pager
         for ($i = 1; $i <= $max_page; $i++) :
             echo '<li class="' . $class['li']['main'];
             echo ' ';
-            echo $this->page_num === $i ? $class['li']['disabled'] : $class['li']['active'];
+            echo $this->page_num === $i ? $class['li']['active'] : '';
             echo '">';
             echo '<a class="' . $class['a'];
             echo '" href="' . $link . '?page_num=' . $i . '">' . $i . '</a></li>';
@@ -92,7 +92,7 @@ class Pager
         // active || disabled
         echo '<li class="' . $class['li']['main'];
         echo ' ';
-        echo $this->page_num === $max_page ? $class['li']['disabled'] : $class['li']['active'];
+        echo $this->page_num === $max_page ? $class['li']['disabled'] : '';
         echo '">';
         // next link
         $next = $this->page_num + 1;
