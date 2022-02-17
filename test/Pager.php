@@ -1,4 +1,6 @@
 <?php
+
+declare(strict_types=1);
 class Pager
 {
     private int $page_num;
@@ -16,15 +18,11 @@ class Pager
         $this->line = $line;
         $this->page_num = $page_num;
     }
-    public function getData()
-    {
-        return $this->page_num;
-    }
     /**
-     * @return
+     * @return array $return
      * 対象のページに表示するデータを配列で戻す
      */
-    public function get_data()
+    public function get_data(): array
     {
         $first_page = ($this->page_num - 1) * $this->line;
         $last_page = $this->line * $this->page_num - 1;
