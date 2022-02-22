@@ -37,12 +37,12 @@ class Pager
         return $return;
     }
     /**
-     * @param array
+     * @param array $class
      * class設定用の値を格納
      * 'ul' => 'pagination',
      * 'li' => ['main' => 'page-item', 'active' => 'active', 'disabled' => 'disabled'],
      *  'a' => 'page-link',
-     * @param string
+     * @param string $link
      * ページャをクリックした差異のリンク先URL
      * ページャを表示
      * <nav aria-label="Page navigation example">
