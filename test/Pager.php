@@ -1,18 +1,18 @@
 <?php
 
-declare(strict_types=1);
+// declare(strict_types=1);
 class Pager
 {
-    private int $page_num;
-    private int $line;
-    private array $data_array;
+    private $page_num;
+    private $line;
+    private $data_array;
 
     /**
      * @param array $data_array 表示対象の全データ(配列)
      * @param int $line 1ページあたりの表示件数
      * @param int $page_num 現在のページ番号をセット 0以下はセット負荷
      */
-    public function __construct(array $data_array, int $line, int $page_num)
+    public function __construct($data_array, $line, $page_num)
     {
         $this->data_array = $data_array;
         $this->line = $line;
@@ -22,12 +22,17 @@ class Pager
      * @return array $return
      * 対象のページに表示するデータを配列で戻す
      */
-    public function get_data(): array
+    public function get_data()
     {
         $first_page = ($this->page_num - 1) * $this->line;
         $last_page = $this->line * $this->page_num - 1;
         for ($i = $first_page; $i <= $last_page; $i++) {
-            $return[] = $this->data_array[$i];
+            // 要素数 MAXでないならbreak
+            if (isset($this->data_array[$i]) === false) {
+                break;
+            } else {
+                $return[] = $this->data_array[$i];
+            }
         };
         return $return;
     }
@@ -58,7 +63,7 @@ class Pager
         </ul>
         </nav>
      */
-    public function page_list(array $class = [], string $link = '')
+    public function page_list($class = [], $link = '')
     {
         /** 表示していく */
         echo '<ul class="' . $class['ul'] . '">';
@@ -66,7 +71,7 @@ class Pager
         // active || disabled
         echo '<li class="' . $class['li']['main'];
         echo ' ';
-        echo $this->page_num === 1 ? $class['li']['disabled'] : '';
+        echo (int)$this->page_num === 1 ? $class['li']['disabled'] : '';
         echo '">';
         // prev link
         $prev = $this->page_num - 1;
@@ -76,11 +81,16 @@ class Pager
             </li>';
 
         /** ページ数 */
+        // ページ数が割り切れた場合
         $max_page = count($this->data_array) / $this->line;
+        // ページ数が割り切れない場合
+        if (count($this->data_array) % $this->line !== 0) {
+            $max_page++;
+        }
         for ($i = 1; $i <= $max_page; $i++) :
             echo '<li class="' . $class['li']['main'];
             echo ' ';
-            echo $this->page_num === $i ? $class['li']['active'] : '';
+            echo (int)$this->page_num === $i ? $class['li']['active'] : '';
             echo '">';
             echo '<a class="' . $class['a'];
             echo '" href="' . $link . '?page_num=' . $i . '">' . $i . '</a></li>';
@@ -90,7 +100,7 @@ class Pager
         // active || disabled
         echo '<li class="' . $class['li']['main'];
         echo ' ';
-        echo $this->page_num === $max_page ? $class['li']['disabled'] : '';
+        echo (int)$this->page_num === (int)$max_page ? $class['li']['disabled'] : '';
         echo '">';
         // next link
         $next = $this->page_num + 1;
